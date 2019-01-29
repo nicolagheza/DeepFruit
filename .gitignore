@@ -7,4 +7,6 @@ test-multiple_fruits
 data
 fruit_models
 model
-
+model_fruitdb
+.idea
+Datasets
