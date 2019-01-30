@@ -14,5 +14,5 @@ test_images_dir = '/home/jeeza/Code/DeepFruit/Test'
 with open(labels_file) as f:
     labels = f.readlines()
     num_classes = len(labels) + 1
-number_train_images = 43573
-number_test_images = 14615
+number_train_images = 46461
+number_test_images = 15653
