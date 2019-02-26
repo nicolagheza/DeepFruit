@@ -8,6 +8,5 @@ data
 fruit_models
 model
 model_fruitdb
-.idea
-Datasets
-research
+deepFruits_Datasets
+Fruit_Database
