@@ -26,4 +26,4 @@ model = cnn(input_shape, no_of_classes)
 
 model.summary()
 
-history = model.fit(X, y, batch_size=32, epochs=3, validation_split=0.3, callbacks=[tensorboard])
+history = model.fit(X, y, batch_size=32, epochs=100, validation_split=0.3, callbacks=[tensorboard])
