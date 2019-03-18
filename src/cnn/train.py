@@ -28,31 +28,36 @@ def print_config(cnn_filters, fc_units):
     for fc_unit in fc_units:
         print("Fully connected |  -  | {}".format(fc_unit))
 
-for i, cnn_filter in enumerate(cnn_filters):
-    if i < 8:
-        NAME = "Fruit_Database-CNN-{}x{}x{}x{}-{}x{}".format(
-        cnn_filter[0], cnn_filter[1], cnn_filter[2], cnn_filter[3],
-        fc_units[0][0], fc_units[0][1])
-        print("Current CNN config: {}".format(NAME))
-        print_config(cnn_filter, fc_units[0])
-        tensorboard = TensorBoard(log_dir='logs/{}'.format(NAME))
-        model = cnn(input_shape, cnn_filters[0], fc_units[0], no_of_classes)
-    elif i == 8:
-        NAME = "Fruit_Database-CNN-{}x{}x{}x{}-{}x{}".format(
-        cnn_filter[0], cnn_filter[1], cnn_filter[2], cnn_filter[3],
-        fc_units[1][0], fc_units[1][1])
-        print("Current CNN config: {}".format(NAME))
-        print_config(cnn_filter, fc_units[1])
-        tensorboard = TensorBoard(log_dir='logs/{}'.format(NAME))
-        model = cnn(input_shape, cnn_filters[0], fc_units[0], no_of_classes)
-    else:
-        NAME = "Fruit_Database-CNN-{}x{}x{}x{}-{}x{}".format(
-        cnn_filter[0], cnn_filter[1], cnn_filter[2], cnn_filter[3],
-        fc_units[2][0], fc_units[2][1])
-        print("Current CNN config: {}".format(NAME))
-        print_config(cnn_filter, fc_units[2])
-        tensorboard = TensorBoard(log_dir='logs/{}'.format(NAME))
-        model = cnn(input_shape, cnn_filters[0], fc_units[0], no_of_classes)
+def train():
+    for i, cnn_filter in enumerate(cnn_filters):
+        if i < 8:
+            NAME = "Fruit_Database-CNN-{}x{}x{}x{}-{}x{}".format(
+            cnn_filter[0], cnn_filter[1], cnn_filter[2], cnn_filter[3],
+            fc_units[0][0], fc_units[0][1])
+            print("Current CNN config: {}".format(NAME))
+            print_config(cnn_filter, fc_units[0])
+            tensorboard = TensorBoard(log_dir='logs/{}'.format(NAME))
+            model = cnn(input_shape, cnn_filters[0], fc_units[0], no_of_classes)
+        elif i == 8:
+            NAME = "Fruit_Database-CNN-{}x{}x{}x{}-{}x{}".format(
+            cnn_filter[0], cnn_filter[1], cnn_filter[2], cnn_filter[3],
+            fc_units[1][0], fc_units[1][1])
+            print("Current CNN config: {}".format(NAME))
+            print_config(cnn_filter, fc_units[1])
+            tensorboard = TensorBoard(log_dir='logs/{}'.format(NAME))
+            model = cnn(input_shape, cnn_filters[0], fc_units[0], no_of_classes)
+        else:
+            NAME = "Fruit_Database-CNN-{}x{}x{}x{}-{}x{}".format(
+            cnn_filter[0], cnn_filter[1], cnn_filter[2], cnn_filter[3],
+            fc_units[2][0], fc_units[2][1])
+            print("Current CNN config: {}".format(NAME))
+            print_config(cnn_filter, fc_units[2])
+            tensorboard = TensorBoard(log_dir='logs/{}'.format(NAME))
+            model = cnn(input_shape, cnn_filters[0], fc_units[0], no_of_classes)
+            
+        history = model.fit(X, y, batch_size=32, epochs=1, validation_split=0.3, callbacks=[tensorboard])
+        model.save_weights(NAME + ".h5")
 
-    history = model.fit(X, y, batch_size=32, epochs=1, validation_split=0.3, callbacks=[tensorboard])
 
+if if __name__ == "__main__":
+    train()
