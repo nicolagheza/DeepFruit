@@ -1,15 +1,16 @@
 from network import cnn
 from keras.utils import np_utils
+from sklearn.model_selection import train_test_split
 from tensorflow.keras.callbacks import TensorBoard
 
 import pickle
 
 seed = 42
 
-pickle_in = open("C:/Users/nicol/Code/DeepFruit/Fruit_Database/X.pickle","rb")
+pickle_in = open("/home/nicol/DeepFruit/X.pickle","rb")
 X = pickle.load(pickle_in)
 
-pickle_in = open("C:/Users/nicol/Code/DeepFruit/Fruit_Database/y.pickle","rb")
+pickle_in = open("/home/nicol/DeepFruit/y.pickle","rb")
 y = pickle.load(pickle_in)
 
 no_of_classes = 15
@@ -64,5 +65,5 @@ def train():
         model.save_weights(NAME + ".h5")
 
 
-if if __name__ == "__main__":
+if __name__ == "__main__":
     train()

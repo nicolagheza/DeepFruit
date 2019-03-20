@@ -10,3 +10,6 @@ model
 model_fruitdb
 deepFruits_Datasets
 Fruit_Database
+X.pickle
+y.pickle
+logs
