@@ -4,14 +4,19 @@ from tensorflow.keras.callbacks import TensorBoard
 
 import pickle
 
+seed = 42
+
 pickle_in = open("C:/Users/nicol/Code/DeepFruit/Fruit_Database/X.pickle","rb")
 X = pickle.load(pickle_in)
 
 pickle_in = open("C:/Users/nicol/Code/DeepFruit/Fruit_Database/y.pickle","rb")
 y = pickle.load(pickle_in)
-y = np_utils.to_categorical(y, no_of_classes) 
 
 no_of_classes = 15
+
+y = np_utils.to_categorical(y, no_of_classes) 
+
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.33, random_state=seed)
 
 input_shape = (100, 100, 1)
 
