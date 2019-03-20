@@ -13,3 +13,5 @@ Fruit_Database
 X.pickle
 y.pickle
 logs
+Fruit_Database-CNN-*
+*.pyc
