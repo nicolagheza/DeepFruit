@@ -60,7 +60,7 @@ def train():
             tensorboard = TensorBoard(log_dir='logs/{}'.format(NAME))
             model = cnn(input_shape, cnn_filters[0], fc_units[0], no_of_classes)
             
-        history = model.fit(X, y, batch_size=32, epochs=1, validation_split=0.3, callbacks=[tensorboard])
+        history = model.fit(X_train, y_train, batch_size=32, epochs=10, validation_data=(X_test, y_test), callbacks=[tensorboard])
         model.save_weights(NAME + ".h5")
 
 
