@@ -7,6 +7,8 @@ import pickle
 tf.app.flags.DEFINE_string('model_path', '<model_path>', 'Path to model file')
 FLAGS = tf.app.flags.FLAGS
 
+seed = 42
+
 no_of_classes = 15
 
 pickle_in = open("/home/nicol/DeepFruit/X.pickle","rb")
@@ -26,5 +28,5 @@ X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.33, random
 loss, acc = model.evaluate(X_train, y_train)
 val_loss, val_acc = model.evaluate(X_test, y_test)
 
-print("Accuracy: {}, Loss: {}".format(acc, los))
+print("Accuracy: {}, Loss: {}".format(acc, loss))
 print("Validation Accuracy: {}, Validation Loss: {}".format(val_acc, val_loss))
