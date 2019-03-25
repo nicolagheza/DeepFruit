@@ -2,15 +2,18 @@ from network import cnn
 from keras.utils import np_utils
 from sklearn.model_selection import train_test_split
 from tensorflow.keras.callbacks import TensorBoard
-
+import tensorflow as tf
 import pickle
 
 seed = 42
 
-pickle_in = open("/home/nicol/DeepFruit/X.pickle","rb")
+tf.app.flags.DEFINE_string('data_path', 'C:\Code\DeepFruit\Fruit_Database', 'Path to data folder')
+FLAGS = tf.app.flags.FLAGS
+
+pickle_in = open("{}\X.pickle".format(FLAGS["data_path"].value),"rb")
 X = pickle.load(pickle_in)
 
-pickle_in = open("/home/nicol/DeepFruit/y.pickle","rb")
+pickle_in = open("{}\y.pickle".format(FLAGS["data_path"].value),"rb")
 y = pickle.load(pickle_in)
 
 no_of_classes = 15
@@ -37,7 +40,7 @@ def print_config(cnn_filters, fc_units):
 def train():
     for i, cnn_filter in enumerate(cnn_filters):
         if i < 8:
-            NAME = "Fruit_Database-CNN-{}x{}x{}x{}-{}x{}".format(
+            NAME = "Fruit_Database-150x150-CNN-{}x{}x{}x{}-{}x{}".format(
             cnn_filter[0], cnn_filter[1], cnn_filter[2], cnn_filter[3],
             fc_units[0][0], fc_units[0][1])
             print("Current CNN config: {}".format(NAME))
@@ -45,7 +48,7 @@ def train():
             tensorboard = TensorBoard(log_dir='logs/{}'.format(NAME))
             model = cnn(input_shape, cnn_filters[0], fc_units[0], no_of_classes)
         elif i == 8:
-            NAME = "Fruit_Database-CNN-{}x{}x{}x{}-{}x{}".format(
+            NAME = "Fruit_Database-150x150-CNN-{}x{}x{}x{}-{}x{}".format(
             cnn_filter[0], cnn_filter[1], cnn_filter[2], cnn_filter[3],
             fc_units[1][0], fc_units[1][1])
             print("Current CNN config: {}".format(NAME))
@@ -53,7 +56,7 @@ def train():
             tensorboard = TensorBoard(log_dir='logs/{}'.format(NAME))
             model = cnn(input_shape, cnn_filters[0], fc_units[0], no_of_classes)
         else:
-            NAME = "Fruit_Database-CNN-{}x{}x{}x{}-{}x{}".format(
+            NAME = "Fruit_Database-150x150-CNN-{}x{}x{}x{}-{}x{}".format(
             cnn_filter[0], cnn_filter[1], cnn_filter[2], cnn_filter[3],
             fc_units[2][0], fc_units[2][1])
             print("Current CNN config: {}".format(NAME))

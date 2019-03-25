@@ -1,5 +1,6 @@
 from keras.models import Sequential
 from keras.layers import Dense, Activation, Conv2D, MaxPooling2D, BatchNormalization, Dropout, Flatten
+from keras import optimizers
 
 def cnn(input_shape, cnn_filters, fc_units, n_classes):
     model = Sequential()
@@ -32,8 +33,10 @@ def cnn(input_shape, cnn_filters, fc_units, n_classes):
 
     model.add(Dense(n_classes, activation='softmax'))
 
+    adam = optimizers.Adam(lr=0.0001)
+
     model.compile(loss='categorical_crossentropy',
-              optimizer='Adam',
+              optimizer=adam,
               metrics=['accuracy'])
 
     return model    
