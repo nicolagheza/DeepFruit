@@ -15,16 +15,16 @@ no_of_classes = 15
 
 seed = 42
 
-pickle_in = open("{}\X.pickle".format(FLAGS["data_path"].value),"rb")
+pickle_in = open("{}\X.pickle".format(FLAGS.data_path),"rb")
 X = pickle.load(pickle_in)
 
-pickle_in = open("{}\y.pickle".format(FLAGS["data_path"].value),"rb")
+pickle_in = open("{}\y.pickle".format(FLAGS.data_path),"rb")
 y = pickle.load(pickle_in)
 y = np_utils.to_categorical(y, no_of_classes) 
 
 input_shape = (100, 100, 1)
 
-model = load_model(FLAGS["model_path"].value)
+model = load_model(FLAGS.model_path)
 
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.33, random_state=seed)
 

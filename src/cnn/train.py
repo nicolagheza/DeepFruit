@@ -9,11 +9,12 @@ seed = 42
 
 tf.app.flags.DEFINE_string('data_path', 'C:\Code\DeepFruit\Fruit_Database', 'Path to data folder')
 FLAGS = tf.app.flags.FLAGS
+print (FLAGS.data_path)
 
-pickle_in = open("{}\X.pickle".format(FLAGS["data_path"].value),"rb")
+pickle_in = open("{}\X.pickle".format(FLAGS.data_path),"rb")
 X = pickle.load(pickle_in)
 
-pickle_in = open("{}\y.pickle".format(FLAGS["data_path"].value),"rb")
+pickle_in = open("{}\y.pickle".format(FLAGS.data_path),"rb")
 y = pickle.load(pickle_in)
 
 no_of_classes = 15
