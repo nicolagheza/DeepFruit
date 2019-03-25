@@ -9,6 +9,8 @@ tf.app.flags.DEFINE_string('model_path', 'model.h5', 'Path to model file')
 tf.app.flags.DEFINE_string('data_path', 'C:\Code\DeepFruit\Fruit_Database', 'Path to data folder')
 FLAGS = tf.app.flags.FLAGS
 
+seed = 42
+
 no_of_classes = 15
 
 seed = 42
