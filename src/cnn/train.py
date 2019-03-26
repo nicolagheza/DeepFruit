@@ -9,12 +9,11 @@ seed = 42
 
 tf.app.flags.DEFINE_string('data_path', 'C:\Code\DeepFruit\Fruit_Database', 'Path to data folder')
 FLAGS = tf.app.flags.FLAGS
-print (FLAGS.data_path)
 
-pickle_in = open("{}\X.pickle".format(FLAGS.data_path),"rb")
+pickle_in = open("{}/X.pickle".format(FLAGS.data_path),"rb")
 X = pickle.load(pickle_in)
 
-pickle_in = open("{}\y.pickle".format(FLAGS.data_path),"rb")
+pickle_in = open("{}/y.pickle".format(FLAGS.data_path),"rb")
 y = pickle.load(pickle_in)
 
 no_of_classes = 15
@@ -41,7 +40,7 @@ def print_config(cnn_filters, fc_units):
 def train():
     for i, cnn_filter in enumerate(cnn_filters):
         if i < 8:
-            NAME = "Fruit_Database-150x150-CNN-{}x{}x{}x{}-{}x{}".format(
+            NAME = "Fruit_Database-100x100-CNN-{}x{}x{}x{}-{}x{}".format(
             cnn_filter[0], cnn_filter[1], cnn_filter[2], cnn_filter[3],
             fc_units[0][0], fc_units[0][1])
             print("Current CNN config: {}".format(NAME))
@@ -49,7 +48,7 @@ def train():
             tensorboard = TensorBoard(log_dir='logs/{}'.format(NAME))
             model = cnn(input_shape, cnn_filters[0], fc_units[0], no_of_classes)
         elif i == 8:
-            NAME = "Fruit_Database-150x150-CNN-{}x{}x{}x{}-{}x{}".format(
+            NAME = "Fruit_Database-100x100-CNN-{}x{}x{}x{}-{}x{}".format(
             cnn_filter[0], cnn_filter[1], cnn_filter[2], cnn_filter[3],
             fc_units[1][0], fc_units[1][1])
             print("Current CNN config: {}".format(NAME))
@@ -57,7 +56,7 @@ def train():
             tensorboard = TensorBoard(log_dir='logs/{}'.format(NAME))
             model = cnn(input_shape, cnn_filters[0], fc_units[0], no_of_classes)
         else:
-            NAME = "Fruit_Database-150x150-CNN-{}x{}x{}x{}-{}x{}".format(
+            NAME = "Fruit_Database-100x100-CNN-{}x{}x{}x{}-{}x{}".format(
             cnn_filter[0], cnn_filter[1], cnn_filter[2], cnn_filter[3],
             fc_units[2][0], fc_units[2][1])
             print("Current CNN config: {}".format(NAME))
@@ -66,7 +65,8 @@ def train():
             model = cnn(input_shape, cnn_filters[0], fc_units[0], no_of_classes)
             
         history = model.fit(X_train, y_train, batch_size=32, epochs=10, validation_data=(X_test, y_test), callbacks=[tensorboard])
-        model.save_weights(NAME + ".h5")
+        model.save(NAME + ".h5")
+        break;
 
 
 if __name__ == "__main__":
