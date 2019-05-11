@@ -51,6 +51,8 @@ def train_model(session, train_operation, loss_operation, correct_prediction, it
         batch_x = np.reshape(batch_x, [network.batch_size, network.input_size])
         summary, _  = session.run([merged, train_operation], feed_dict={network.X: batch_x, network.Y: batch_y})
 
+        test_writer.add_summary(summary)
+
         if i % step_display == 0:
             time2 = time.time()
             print("time: %.4f step: %d" % (time2 - time1, i))
