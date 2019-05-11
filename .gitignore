@@ -15,3 +15,7 @@ y.pickle
 logs
 Fruit_Database-CNN-*
 *.pyc
+fruit_360
+fruit_database
+*.png
+*.jpg
