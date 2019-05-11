@@ -12,9 +12,9 @@ from network_structure import utils
 from utils import constants
 
 # default number of iterations to run the training
-iterations = 100 # 75000
+iterations = 75000
 # default amount of iterations after we display the loss and accuracy
-display_interval = 10 # 1000
+display_interval = 1000
 # default amount of iterations after we save the model
 save_interval = 100
 step_display = 100
@@ -40,10 +40,16 @@ def train_model(session, train_operation, loss_operation, correct_prediction, it
     test_init_op = iterator_map["test_init_op"]
     train_images_with_labels = train_iterator.get_next()
     test_images_with_labels = test_iterator.get_next()
+
+    train_writer = tf.summary.FileWriter('logs/train', session.graph)
+    test_writer = tf.summary.FileWriter('logs/test')
+
+    merged = tf.summary.merge_all()
+
     for i in range(1, iterations + 1):
         batch_x, batch_y = session.run(train_images_with_labels)
         batch_x = np.reshape(batch_x, [network.batch_size, network.input_size])
-        session.run(train_operation, feed_dict={network.X: batch_x, network.Y: batch_y})
+        summary, _  = session.run([merged, train_operation], feed_dict={network.X: batch_x, network.Y: batch_y})
 
         if i % step_display == 0:
             time2 = time.time()
@@ -59,6 +65,7 @@ def train_model(session, train_operation, loss_operation, correct_prediction, it
             # save the weights and the meta data for the graph
             saver.save(session, constants.fruit_models_dir + 'model.ckpt')
             tf.train.write_graph(session.graph_def, constants.fruit_models_dir, 'graph.pbtxt')
+        
 
 
 def calculate_intermediate_accuracy_and_loss(session, correct_prediction, loss_operation, test_images_with_labels, test_init_op, total_image_count):

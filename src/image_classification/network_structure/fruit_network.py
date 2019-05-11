@@ -79,6 +79,8 @@ def build_model():
     loss_operation = tf.reduce_mean(tf.nn.sparse_softmax_cross_entropy_with_logits(logits=logits, labels=Y))
     loss_weight_decay = tf.reduce_sum(tf.stack([tf.nn.l2_loss(i) for i in tf.get_collection('variables')]))
     loss = loss_operation + weight_decay * loss_weight_decay
+    tf.summary.scalar('cross_entropy', loss)
+
     # use adaptive moment estimation optimizer
     optimizer = tf.train.AdamOptimizer(learning_rate=learning_rate)
     train_op = optimizer.minimize(loss=loss)
