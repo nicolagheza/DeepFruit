@@ -62,6 +62,7 @@ def train_model(session, train_operation, loss_operation, correct_prediction, it
             acc_value, loss = calculate_intermediate_accuracy_and_loss(session, correct_prediction, loss_operation,
                                                                        test_images_with_labels, test_init_op, constants.number_train_images)
             network.learning_rate = network.update_learning_rate(acc_value, learn_rate=network.learning_rate)
+            train_writer.add_summary(summary, i)
             print("step: %d loss: %.4f accuracy: %.4f" % (i, loss, acc_value))
         if i % save_interval == 0:
             # save the weights and the meta data for the graph
