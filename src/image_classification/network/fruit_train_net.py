@@ -41,9 +41,6 @@ def train_model(session, train_operation, loss_operation, correct_prediction, it
     train_images_with_labels = train_iterator.get_next()
     test_images_with_labels = test_iterator.get_next()
 
-    train_writer = tf.summary.FileWriter('logs/train', session.graph)
-    test_writer = tf.summary.FileWriter('logs/test')
-
     merged = tf.summary.merge_all()
 
     for i in range(1, iterations + 1):
@@ -51,25 +48,16 @@ def train_model(session, train_operation, loss_operation, correct_prediction, it
         batch_x = np.reshape(batch_x, [network.batch_size, network.input_size])
         summary, _  = session.run([merged, train_operation], feed_dict={network.X: batch_x, network.Y: batch_y})
 
-        train_writer.add_summary(summary, i)
-
-
-
         if i % step_display == 0:
-            val_acc, loss = calculate_intermediate_accuracy_and_loss(session, correct_prediction, loss_operation,
-                                                                       test_images_with_labels, test_init_op, constants.number_train_images)
-            network.learning_rate = network.update_learning_rate(val_acc, learn_rate=network.learning_rate)
-            test_writer.add_summary(summary, i)
             time2 = time.time()
             print("time: %.4f step: %d" % (time2 - time1, i))
             time1 = time.time()
 
         if i % display_interval == 0:
-            val_acc, loss = calculate_intermediate_accuracy_and_loss(session, correct_prediction, loss_operation,
+            acc_value, loss = calculate_intermediate_accuracy_and_loss(session, correct_prediction, loss_operation,
                                                                        test_images_with_labels, test_init_op, constants.number_train_images)
-            network.learning_rate = network.update_learning_rate(val_acc, learn_rate=network.learning_rate)
-            test_writer.add_summary(summary, i)
-            print("step: %d loss: %.4f accuracy: %.4f" % (i, loss, val_acc))
+            network.learning_rate = network.update_learning_rate(acc_value, learn_rate=network.learning_rate)
+            print("step: %d loss: %.4f accuracy: %.4f" % (i, loss, acc_value))
         if i % save_interval == 0:
             # save the weights and the meta data for the graph
             saver.save(session, constants.fruit_models_dir + 'model.ckpt')
