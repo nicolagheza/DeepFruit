@@ -53,12 +53,13 @@ def train_model(session, train_operation, loss_operation, correct_prediction, it
 
         train_writer.add_summary(summary, i)
 
-        val_acc, loss = calculate_intermediate_accuracy_and_loss(session, correct_prediction, loss_operation,
-                                                                       test_images_with_labels, test_init_op, constants.number_train_images)
-        network.learning_rate = network.update_learning_rate(val_acc, learn_rate=network.learning_rate)
-        test_writer.add_summary(summary, i)
+
 
         if i % step_display == 0:
+            val_acc, loss = calculate_intermediate_accuracy_and_loss(session, correct_prediction, loss_operation,
+                                                                       test_images_with_labels, test_init_op, constants.number_train_images)
+            network.learning_rate = network.update_learning_rate(val_acc, learn_rate=network.learning_rate)
+            test_writer.add_summary(summary, i)
             time2 = time.time()
             print("time: %.4f step: %d" % (time2 - time1, i))
             time1 = time.time()
