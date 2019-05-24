@@ -22,7 +22,6 @@ step_display_interval = 100
 # use the saved model and continue training
 useCkpt = False
 
-
 # create two datasets from the previously created training tfrecord files
 # the first dataset will apply data augmentation and shuffle its elements and will continuously queue new items - used for training
 # the second dataset will iterate once over the training images - used for evaluating the loss and accuracy during the training

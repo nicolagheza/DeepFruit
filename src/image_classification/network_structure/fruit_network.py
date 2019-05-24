@@ -3,8 +3,8 @@ import numpy as np
 from . import utils
 from utils import constants
 
-HEIGHT = 100
-WIDTH = 100
+HEIGHT = 150
+WIDTH = 150
 # number of channels for an image - jpeg image has RGB channels
 CHANNELS = 3
 # number of channels for the input layer of the network: HSV + gray scale
