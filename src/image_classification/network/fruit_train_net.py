@@ -5,7 +5,7 @@ import tensorflow as tf
 import numpy as np
 import time
 import re
-
+from matplotlib import pyplot as plt
 from network_structure import fruit_network as network
 from network_structure import utils
 
@@ -43,6 +43,9 @@ def train_model(session, train_operation, loss_operation, correct_prediction, it
     test_init_op = iterator_map["test_init_op"]
     train_images_with_labels = train_iterator.get_next()
     test_images_with_labels = test_iterator.get_next()
+    steps = []
+    acc = []
+    los = []
     for i in range(1, iterations + 1):
         batch_x, batch_y = session.run(train_images_with_labels)
         batch_x = np.reshape(batch_x, [network.batch_size, network.input_size])
@@ -58,11 +61,18 @@ def train_model(session, train_operation, loss_operation, correct_prediction, it
                                                                        test_images_with_labels, test_init_op, constants.number_train_images)
             network.learning_rate = network.update_learning_rate(acc_value, learn_rate=network.learning_rate)
             print("step: %d loss: %.4f accuracy: %.4f" % (i, loss, acc_value))
+            steps.append(i)
+            acc.append(acc_value)
+            los.append(loss)
         if i % save_interval == 0:
             # save the weights and the meta data for the graph
             saver.save(session, constants.fruit_models_dir + 'model.ckpt')
             tf.train.write_graph(session.graph_def, constants.fruit_models_dir, 'graph.pbtxt')
 
+        plt.figure()
+        plt.plot(steps, acc)
+        plt.savefig('foo.png')
+    
 
 def calculate_intermediate_accuracy_and_loss(session, correct_prediction, loss_operation, test_images_with_labels, test_init_op, total_image_count):
     sess.run(test_init_op)
