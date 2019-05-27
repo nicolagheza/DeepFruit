@@ -5,6 +5,7 @@ import numpy
 import tensorflow as tf
 import numpy as np
 import re
+import matplotlib.pyplot as plt
 
 from network_structure import fruit_network as network
 from network_structure import utils
@@ -16,7 +17,7 @@ def setup_test_data():
     mislabeled = {}
 
     # associate the label number with the actual human readable label name
-    with open(constants.root_dir + '\\utils\\labels') as f:
+    with open(constants.root_dir + '\\utils\\labels_fruitdb') as f:
         labels_text = f.readlines()
     labels_text = [x.strip() for x in labels_text]
     for label in labels_text:
@@ -83,5 +84,12 @@ if __name__ == '__main__':
         saver.restore(sess, ckpt.model_checkpoint_path)
         test_model(sess, prediction, iterator, total_images, file_name)
         print(mislabeled)
+
+        # Plot mismatch
+        plt.bar(range(len(mislabeled)), list(mislabeled.values()), align='center')
+        plt.xticks(range(len(mislabeled)), list(mislabeled.keys()))
+        plt.ylabel('Count')
+        plt.xlabel('Classification')
+        plt.save_img()
 
         sess.close()
