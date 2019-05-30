@@ -3,8 +3,8 @@ import numpy as np
 from . import utils
 from utils import constants
 
-HEIGHT = 150
-WIDTH = 150
+HEIGHT = constants.height
+WIDTH = constants.width
 # number of channels for an image - jpeg image has RGB channels
 CHANNELS = 3
 # number of channels for the input layer of the network: HSV + gray scale
@@ -21,7 +21,7 @@ X = tf.placeholder(tf.float32, [None, input_size], name="X")
 # placeholder for actual labels
 Y = tf.placeholder(tf.int64, [None], name="Y")
 
-initial_learning_rate = 0.001
+initial_learning_rate = 0.001 # Try to change to 0.01
 final_learning_rate = 0.00001
 learning_rate = initial_learning_rate
 
@@ -76,10 +76,7 @@ def build_model():
     prediction = tf.nn.softmax(logits)
 
     # calculate the loss using the predicted labels vs the expected labels
-    loss_operation = tf.reduce_mean(tf.nn.sparse_softmax_cross_entropy_with_logits(logits=logits, labels=Y))
-    loss_weight_decay = tf.reduce_sum(tf.stack([tf.nn.l2_loss(i) for i in tf.get_collection('variables')]))
-    loss = loss_operation + weight_decay * loss_weight_decay
-    
+    loss = tf.reduce_mean(tf.nn.sparse_softmax_cross_entropy_with_logits(logits=logits, labels=Y))
     # use adaptive moment estimation optimizer
     optimizer = tf.train.AdamOptimizer(learning_rate=learning_rate)
     train_op = optimizer.minimize(loss=loss)

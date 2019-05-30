@@ -69,9 +69,18 @@ def train_model(session, train_operation, loss_operation, correct_prediction, it
             saver.save(session, constants.fruit_models_dir + 'model.ckpt')
             tf.train.write_graph(session.graph_def, constants.fruit_models_dir, 'graph.pbtxt')
 
-        plt.figure()
-        plt.plot(steps, acc)
-        plt.savefig('foo.png')
+    plt.figure()
+    plt.plot(steps, acc)
+    plt.xlabel('Epoch')
+    plt.ylabel('Accuracy')
+    plt.savefig('accuracy.png')
+
+    plt.figure()
+    plt.plot(steps, los)
+    plt.xlabel('Epoch')
+    plt.ylabel('Loss')
+    plt.savefig('loss.png')
+
     
 
 def calculate_intermediate_accuracy_and_loss(session, correct_prediction, loss_operation, test_images_with_labels, test_init_op, total_image_count):

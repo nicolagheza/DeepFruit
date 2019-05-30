@@ -1200,7 +1200,7 @@ if __name__ == '__main__':
   parser.add_argument(
       '--validation_percentage',
       type=int,
-      default=10,
+      default=20,
       help='What percentage of images to use as a validation set.'
   )
   parser.add_argument(
@@ -1229,7 +1229,7 @@ if __name__ == '__main__':
   parser.add_argument(
       '--validation_batch_size',
       type=int,
-      default=100,
+      default=-1,
       help="""\
       How many images to use in an evaluation batch. This validation set is
       used much more often than the test set, and is an early indicator of how
@@ -1241,7 +1241,7 @@ if __name__ == '__main__':
   )
   parser.add_argument(
       '--print_misclassified_test_images',
-      default=False,
+      default=True,
       help="""\
       Whether to print out a list of all misclassified test images.\
       """,

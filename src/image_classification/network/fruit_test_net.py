@@ -90,6 +90,7 @@ if __name__ == '__main__':
         plt.xticks(range(len(mislabeled)), list(mislabeled.keys()))
         plt.ylabel('Count')
         plt.xlabel('Classification')
-        plt.save_img()
+        plt.show()
+        #plt.savefig('mismatches.png')
 
         sess.close()

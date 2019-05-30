@@ -1,7 +1,7 @@
 import tensorflow as tf
 
-width = 150
-height = 150
+WIDTH = 150
+HEIGHT = 150
 
 # perform data augmentation on images
 # add random hue and saturation
@@ -37,7 +37,7 @@ def parse_single_example(serialized_example):
         }
     )
     image = tf.image.decode_jpeg(features['image_raw'], channels=3)
-    image = tf.reshape(image, [width, height, 3])
+    image = tf.reshape(image, [WIDTH, HEIGHT, 3])
     label = tf.cast(features['label'], tf.int32)
     return image, label
 
